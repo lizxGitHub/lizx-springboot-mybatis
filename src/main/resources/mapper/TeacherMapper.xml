@@ -18,6 +18,19 @@
     from teacher
     where Tno = #{tno,jdbcType=VARCHAR}
   </select>
+
+  <!-- resultType的返回值只看单个原子是什么类型的，外面套什么类型不用过问 -->
+  <select id="selectByIds" resultType="com.lizhuxiong.lizxspringbootmybatis.model.Teacher">
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where
+    Tno in
+    <foreach collection="array" open="(" separator="," close=")" item="tno" index="index">
+      #{tno}
+    </foreach>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from teacher
     where Tno = #{tno,jdbcType=VARCHAR}

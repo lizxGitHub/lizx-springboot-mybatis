@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author com.mhout.lizx
@@ -31,6 +32,16 @@ public class TeacherController {
         AjaxJson json = new AjaxJson();
         Teacher teacher = teacherService.selectByPrimaryKey(sno);
         json.put("teacher", teacher);
+        return json;
+    }
+
+    @ResponseBody
+    @GetMapping("/getTeacherMany")
+    public AjaxJson getTeacherMany (@RequestParam(name = "tnos", required = false)String tnos) {
+        AjaxJson json = new AjaxJson();
+        String[] tnoArray = tnos.split(",");
+        List<Teacher> teacherList = teacherService.selectByIds(tnoArray);
+        json.put("teacherMany", teacherList);
         return json;
     }
 
