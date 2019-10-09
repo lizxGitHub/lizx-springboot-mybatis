@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lizhuxiong.lizxspringbootmybatis.dao.errorDataNMapper" >
+  <resultMap id="BaseResultMap" type="com.lizhuxiong.lizxspringbootmybatis.model.errorDataN" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="field_log_id" property="fieldLogId" jdbcType="VARCHAR" />
+    <result column="field_col" property="fieldCol" jdbcType="VARCHAR" />
+    <result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+    <result column="table_real_name" property="tableRealName" jdbcType="VARCHAR" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="table_hierarchy" property="tableHierarchy" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lizhuxiong.lizxspringbootmybatis.model.errorDataNWithBLOBs" extends="BaseResultMap" >
+    <result column="error_data" property="errorData" jdbcType="LONGVARCHAR" />
+    <result column="rule_str" property="ruleStr" jdbcType="LONGVARCHAR" />
+    <result column="dispose_feedback" property="disposeFeedback" jdbcType="LONGVARCHAR" />
+    <result column="origin_info" property="originInfo" jdbcType="LONGVARCHAR" />
+    <result column="primary_data" property="primaryData" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, field_log_id, field_col, field_name, table_real_name, table_name, create_date,
+    table_hierarchy
+  </sql>
+  <sql id="Blob_Column_List" >
+    error_data, rule_str, dispose_feedback, origin_info, primary_data
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from error_data_n
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from error_data_n
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lizhuxiong.lizxspringbootmybatis.model.errorDataNWithBLOBs" >
+-- 自动生成主键
+    <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+      select replace(uuid(), '-', '') as id from dual
+    </selectKey>
+    insert into error_data_n (id, field_log_id, field_col,
+      field_name, table_real_name, table_name,
+      create_date, table_hierarchy, error_data,
+      rule_str, dispose_feedback, origin_info,
+      primary_data)
+    values (#{id,jdbcType=VARCHAR}, #{fieldLogId,jdbcType=VARCHAR}, #{fieldCol,jdbcType=VARCHAR},
+      #{fieldName,jdbcType=VARCHAR}, #{tableRealName,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{tableHierarchy,jdbcType=VARCHAR}, #{errorData,jdbcType=LONGVARCHAR},
+      #{ruleStr,jdbcType=LONGVARCHAR}, #{disposeFeedback,jdbcType=LONGVARCHAR}, #{originInfo,jdbcType=LONGVARCHAR},
+      #{primaryData,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertBatch" parameterType="com.lizhuxiong.lizxspringbootmybatis.model.errorDataNWithBLOBs" >
+    <!-- 自动生成主键-->
+<!--    <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">-->
+<!--      select replace(uuid(), '-', '') as id from dual-->
+<!--    </selectKey>-->
+    insert into error_data_n (id, field_log_id, field_col,
+    field_name, table_real_name, table_name,
+    create_date, table_hierarchy, error_data,
+    rule_str, dispose_feedback, origin_info,
+    primary_data)
+    values
+    <foreach collection="recordList" item="record" separator=",">
+    (#{record.id,jdbcType=VARCHAR}, #{record.fieldLogId,jdbcType=VARCHAR}, #{record.fieldCol,jdbcType=VARCHAR},
+    #{record.fieldName,jdbcType=VARCHAR}, #{record.tableRealName,jdbcType=VARCHAR}, #{record.tableName,jdbcType=VARCHAR},
+    #{record.createDate,jdbcType=TIMESTAMP}, #{record.tableHierarchy,jdbcType=VARCHAR}, #{record.errorData,jdbcType=LONGVARCHAR},
+    #{record.ruleStr,jdbcType=LONGVARCHAR}, #{record.disposeFeedback,jdbcType=LONGVARCHAR}, #{record.originInfo,jdbcType=LONGVARCHAR},
+    #{record.primaryData,jdbcType=LONGVARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.lizhuxiong.lizxspringbootmybatis.model.errorDataNWithBLOBs" >
+    insert into error_data_n
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fieldLogId != null" >
+        field_log_id,
+      </if>
+      <if test="fieldCol != null" >
+        field_col,
+      </if>
+      <if test="fieldName != null" >
+        field_name,
+      </if>
+      <if test="tableRealName != null" >
+        table_real_name,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="tableHierarchy != null" >
+        table_hierarchy,
+      </if>
+      <if test="errorData != null" >
+        error_data,
+      </if>
+      <if test="ruleStr != null" >
+        rule_str,
+      </if>
+      <if test="disposeFeedback != null" >
+        dispose_feedback,
+      </if>
+      <if test="originInfo != null" >
+        origin_info,
+      </if>
+      <if test="primaryData != null" >
+        primary_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldLogId != null" >
+        #{fieldLogId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldCol != null" >
+        #{fieldCol,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableRealName != null" >
+        #{tableRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tableHierarchy != null" >
+        #{tableHierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="errorData != null" >
+        #{errorData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ruleStr != null" >
+        #{ruleStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="disposeFeedback != null" >
+        #{disposeFeedback,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="originInfo != null" >
+        #{originInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="primaryData != null" >
+        #{primaryData,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lizhuxiong.lizxspringbootmybatis.model.errorDataNWithBLOBs" >
+    update error_data_n
+    <set >
+      <if test="fieldLogId != null" >
+        field_log_id = #{fieldLogId,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldCol != null" >
+        field_col = #{fieldCol,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null" >
+        field_name = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableRealName != null" >
+        table_real_name = #{tableRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tableHierarchy != null" >
+        table_hierarchy = #{tableHierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="errorData != null" >
+        error_data = #{errorData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ruleStr != null" >
+        rule_str = #{ruleStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="disposeFeedback != null" >
+        dispose_feedback = #{disposeFeedback,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="originInfo != null" >
+        origin_info = #{originInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="primaryData != null" >
+        primary_data = #{primaryData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lizhuxiong.lizxspringbootmybatis.model.errorDataNWithBLOBs" >
+    update error_data_n
+    set field_log_id = #{fieldLogId,jdbcType=VARCHAR},
+      field_col = #{fieldCol,jdbcType=VARCHAR},
+      field_name = #{fieldName,jdbcType=VARCHAR},
+      table_real_name = #{tableRealName,jdbcType=VARCHAR},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      table_hierarchy = #{tableHierarchy,jdbcType=VARCHAR},
+      error_data = #{errorData,jdbcType=LONGVARCHAR},
+      rule_str = #{ruleStr,jdbcType=LONGVARCHAR},
+      dispose_feedback = #{disposeFeedback,jdbcType=LONGVARCHAR},
+      origin_info = #{originInfo,jdbcType=LONGVARCHAR},
+      primary_data = #{primaryData,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lizhuxiong.lizxspringbootmybatis.model.errorDataN" >
+    update error_data_n
+    set field_log_id = #{fieldLogId,jdbcType=VARCHAR},
+      field_col = #{fieldCol,jdbcType=VARCHAR},
+      field_name = #{fieldName,jdbcType=VARCHAR},
+      table_real_name = #{tableRealName,jdbcType=VARCHAR},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      table_hierarchy = #{tableHierarchy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
