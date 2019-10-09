@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2019/9/23
  */
 @Controller
-@RequestMapping("/teacher")
+@RequestMapping("/${tempOne}") // ${tempOne} 可以直接读取properties文件中的值
 public class TeacherController {
 
     @Resource
